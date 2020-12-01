@@ -340,7 +340,8 @@ export class Actions {
     autoRecording,
     pinCode,
     simulcast,
-    enableDolbyVoice
+    enableDolbyVoice,
+    dvwc
   ) {
     return (dispatch, getState) => {
       dispatch(ChatActions.clearMessages());
@@ -407,6 +408,7 @@ export class Actions {
                   .join(conference, {
                     constraints: { audio: false, video: false },
                     simulcast: simulcast,
+                    dvwc: dvwc,
                   })
                   .then(function (res) {
                     if (isIOS() && navigator.userAgent.match(/AppleWebKit/)) {
@@ -471,6 +473,7 @@ export class Actions {
                     constraints,
                     simulcast: simulcast,
                     audio3D: false,
+                    dvwc: dvwc,
                   })
                   .then((res) => {
                     dispatch(
@@ -579,6 +582,7 @@ export class Actions {
                 constraints,
                 simulcast: simulcast,
                 audio3D: false,
+                dvwc: dvwc,
               })
               .then((res) => {
                 if (VoxeetSDK.extensions.hasElectron()) {
