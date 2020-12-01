@@ -88,7 +88,6 @@ module.exports = {
       __VERSION__: JSON.stringify(package.version),
     }),
     new CopyWebpackPlugin([{ from: "./src/static", ignore: ["*.html"] }]),
-    new CopyWebpackPlugin([{ from: "./node_modules/@voxeet/voxeet-web-sdk/dist/dvwc_impl.wasm"}]),
     new ExtractTextPlugin("voxeet-react-components.css"),
     new webpack.NoEmitOnErrorsPlugin(),
   ],
