@@ -34,6 +34,7 @@ class AttendeesSettings extends Component {
     this.setAudioDevice = this.setAudioDevice.bind(this);
     this.setVideoDevice = this.setVideoDevice.bind(this);
     this.setOutputDevice = this.setOutputDevice.bind(this);
+    this.onDvcDumpClicked = this.onDvcDumpClicked.bind(this);
     this.onDeviceChange = this.onDeviceChange.bind(this);
     this.onAudioTransparentModeChange = this.onAudioTransparentModeChange.bind(this);
 
@@ -79,6 +80,24 @@ class AttendeesSettings extends Component {
   onAudioTransparentModeChange() {
     const { audioTransparentMode } = this.props.controlsStore;
     this.props.dispatch(ConferenceActions.toggleAudioTransparentMode(!audioTransparentMode));
+  }
+
+  onDvcDumpClicked(e) {
+    e.preventDefault();
+    let dump = VoxeetSDK.telemetry.createStateDump();
+    var link = document.createElement("a");
+    if (link.download !== undefined && dump) {
+      let filename = "DVWC_State_dump_" + new Date().toISOString() + ".zip";
+      let url = URL.createObjectURL(dump.content);
+      link.setAttribute("href", url);
+      link.setAttribute("download", filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      console.log("Failed to create DVWC state dump");
+    }
   }
 
   initDevices() {
@@ -323,6 +342,8 @@ class AttendeesSettings extends Component {
                       </label>
                     </div>
                   </div>}
+
+                  <button onClick={this.onDvcDumpClicked}>DVC DUMP</button>
                   </Fragment>
                 )
               }
