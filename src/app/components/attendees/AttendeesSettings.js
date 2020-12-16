@@ -343,7 +343,7 @@ class AttendeesSettings extends Component {
                     </div>
                   </div>}
 
-                  <button onClick={this.onDvcDumpClicked}>DVC DUMP</button>
+                  <button className="button-dvc-dump" onClick={this.onDvcDumpClicked}>DVC DUMP</button>
                   </Fragment>
                 )
               }
