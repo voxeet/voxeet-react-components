@@ -151,9 +151,9 @@ class AttendeesSettings extends Component {
     this.props.dispatch(ConferenceActions.toggleAudioTransparentMode(!audioTransparentMode));
   }
 
-  onDvcDumpClicked(e) {
+  async onDvcDumpClicked(e) {
     e.preventDefault();
-    let dump = VoxeetSDK.telemetry.createStateDump();
+    let dump = await VoxeetSDK.telemetry.createStateDump();
     var link = document.createElement("a");
     if (link.download !== undefined && dump) {
       let filename = "DVWC_State_dump_" + new Date().toISOString() + ".zip";
