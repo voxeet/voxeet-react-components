@@ -1139,6 +1139,7 @@ export class Actions {
       VoxeetSDK.filePresentation.removeAllListeners();
       VoxeetSDK.recording.removeAllListeners();
       VoxeetSDK.command.removeAllListeners();
+      resolve();
     });
   }
 
