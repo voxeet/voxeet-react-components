@@ -260,23 +260,19 @@ export class Actions {
           sameSite: "none",
         });
         VoxeetSDK.mediaDevice
-            .selectAudioOutput(
-                selected_device.deviceId
-            )
-            .catch((err) => {
-              console.log(err);
-            });
+          .selectAudioOutput(selected_device.deviceId)
+          .catch((err) => {
+            console.log(err);
+          });
         dispatch(
           InputManagerActions.outputAudioChange(selected_device.deviceId)
         );
       } else {
         VoxeetSDK.mediaDevice
-            .selectAudioOutput(
-                Cookies.get("output")
-            )
-            .catch((err) => {
-              console.log(err);
-            });
+          .selectAudioOutput(Cookies.get("output"))
+          .catch((err) => {
+            console.log(err);
+          });
         dispatch(InputManagerActions.outputAudioChange(Cookies.get("output")));
       }
     });
@@ -291,13 +287,13 @@ export class Actions {
       } = getState();
       return VoxeetSDK.createDemoConference().then(function (res) {
         dispatch(
-            ParticipantActions.saveCurrentUser(
-                "Me",
-                "https://gravatar.com/avatar/" +
-                Math.floor(Math.random() * 1000000) +
-                "?s=200&d=identicon",
-                "123456"
-            )
+          ParticipantActions.saveCurrentUser(
+            "Me",
+            "https://gravatar.com/avatar/" +
+              Math.floor(Math.random() * 1000000) +
+              "?s=200&d=identicon",
+            "123456"
+          )
         );
         dispatch(ConferenceActions._conferenceJoined());
         dispatch(ControlsActions.toggleWidget());
@@ -358,9 +354,10 @@ export class Actions {
     chatOptions,
     dvwc
   ) {
-    let maxVideoForwarding = (preConfigPayload && preConfigPayload.maxVideoForwarding !== undefined?
-        preConfigPayload.maxVideoForwarding:
-        maxVideoForwardingParam);
+    let maxVideoForwarding =
+      preConfigPayload && preConfigPayload.maxVideoForwarding !== undefined
+        ? preConfigPayload.maxVideoForwarding
+        : maxVideoForwardingParam;
     return (dispatch, getState) => {
       dispatch(ChatActions.clearMessages());
       dispatch(ParticipantActions.clearParticipantsList());
@@ -410,7 +407,9 @@ export class Actions {
                       )
                     );
                     dispatch(ControlsActions.toggleWidget());
-                    dispatch(ControlsActions.setConferencePermissions(res.permissions));
+                    dispatch(
+                      ControlsActions.setConferencePermissions(res.permissions)
+                    );
                     dispatch(ParticipantActions.triggerHandleOnConnect());
                     if (VoxeetSDK.recording.current) {
                       dispatch(ControlsActions.lockRecording());
@@ -453,7 +452,9 @@ export class Actions {
                       )
                     );
                     dispatch(ControlsActions.toggleWidget());
-                    dispatch(ControlsActions.setConferencePermissions(res.permissions));
+                    dispatch(
+                      ControlsActions.setConferencePermissions(res.permissions)
+                    );
                     dispatch(ParticipantActions.triggerHandleOnConnect());
                     if (VoxeetSDK.recording.current) {
                       dispatch(ControlsActions.lockRecording());
@@ -514,7 +515,9 @@ export class Actions {
                     );
                     dispatch(ControlsActions.toggleWidget());
                     dispatch(ControlsActions.saveConstraints(constraints));
-                    dispatch(ControlsActions.setConferencePermissions(res.permissions));
+                    dispatch(
+                      ControlsActions.setConferencePermissions(res.permissions)
+                    );
                     dispatch(ParticipantActions.triggerHandleOnConnect());
                     if (VoxeetSDK.recording.current) {
                       dispatch(ControlsActions.lockRecording());
@@ -610,43 +613,45 @@ export class Actions {
               })
               .then((res) => {
                 dispatch(
-                    ParticipantActions.saveCurrentUser(
-                        userInfo.name,
-                        userInfo.avatarUrl,
-                        userInfo.externalId
-                    )
+                  ParticipantActions.saveCurrentUser(
+                    userInfo.name,
+                    userInfo.avatarUrl,
+                    userInfo.externalId
+                  )
                 );
                 dispatch(
-                    ConferenceActions._conferenceJoined(
-                        res.id,
-                        pinCode,
-                        res.params.dolbyVoice
-                    )
+                  ConferenceActions._conferenceJoined(
+                    res.id,
+                    pinCode,
+                    res.params.dolbyVoice
+                  )
                 );
                 dispatch(ControlsActions.toggleWidget());
                 dispatch(ControlsActions.saveConstraints(constraints));
-                dispatch(ControlsActions.setConferencePermissions(res.permissions));
+                dispatch(
+                  ControlsActions.setConferencePermissions(res.permissions)
+                );
                 dispatch(ParticipantActions.triggerHandleOnConnect());
                 if (VoxeetSDK.recording.current) {
                   dispatch(ControlsActions.lockRecording());
                   dispatch(
-                      OnBoardingMessageActions.onBoardingDisplay(
-                          strings.recordConferenceStart,
-                          2000
-                      )
+                    OnBoardingMessageActions.onBoardingDisplay(
+                      strings.recordConferenceStart,
+                      2000
+                    )
                   );
                 } else if (autoRecording) {
                   dispatch(ConferenceActions.toggleRecording(res.id, false));
                   dispatch(
-                      ConferenceActions.sendBroadcastMessage(
-                          RECORDING_STATE,
-                          null,
-                          {
-                            name: userInfo.name,
-                            userId: userInfo.participant_id,
-                            recordingRunning: true,
-                          }
-                      )
+                    ConferenceActions.sendBroadcastMessage(
+                      RECORDING_STATE,
+                      null,
+                      {
+                        name: userInfo.name,
+                        userId: userInfo.participant_id,
+                        recordingRunning: true,
+                      }
+                    )
                   );
                 }
                 if (constraints.video) {
@@ -658,28 +663,29 @@ export class Actions {
                   if (preConfigPayload != null) {
                     if (preConfigPayload.outputDeviceSelected)
                       VoxeetSDK.mediaDevice
-                          .selectAudioOutput(
-                              preConfigPayload.outputDeviceSelected
-                          )
-                          .catch((err) => {
-                            console.log(err);
-                          });
+                        .selectAudioOutput(
+                          preConfigPayload.outputDeviceSelected
+                        )
+                        .catch((err) => {
+                          console.log(err);
+                        });
                   } else {
                     this.setOutputAudio(dispatch);
                   }
                 }
                 if (
-                    preConfigPayload &&
-                    preConfigPayload.audioTransparentMode !== undefined
+                  preConfigPayload &&
+                  preConfigPayload.audioTransparentMode !== undefined
                 ) {
                   dispatch(
-                      ConferenceActions.setAudioTransparentMode(preConfigPayload.audioTransparentMode)
+                    ConferenceActions.setAudioTransparentMode(
+                      preConfigPayload.audioTransparentMode
+                    )
                   );
                 }
-                if (maxVideoForwarding!==undefined
-                ) {
+                if (maxVideoForwarding !== undefined) {
                   dispatch(
-                      ControlsActions.setMaxVideoForwarding(maxVideoForwarding)
+                    ControlsActions.setMaxVideoForwarding(maxVideoForwarding)
                   );
                 }
               })
@@ -746,7 +752,7 @@ export class Actions {
   static playBlockedAudio() {
     return () => {
       VoxeetSDK.conference.playBlockedAudio();
-    }
+    };
   }
 
   static conferenceEnded() {
@@ -815,7 +821,9 @@ export class Actions {
           } else {
             promise = VoxeetSDK.conference.stopAudio(user);
           }
-          return promise.then(() => dispatch(ParticipantActions.onToogleMicrophone(userId)));
+          return promise.then(() =>
+            dispatch(ParticipantActions.onToogleMicrophone(userId))
+          );
         }
       }
 
@@ -860,10 +868,10 @@ export class Actions {
         voxeet: { controls },
       } = getState();
       let { requestedVideos } = controls;
-      let request = requestedVideos.map(
-          (id) => VoxeetSDK.conference.participants.get(id)
+      let request = requestedVideos.map((id) =>
+        VoxeetSDK.conference.participants.get(id)
       );
-      return VoxeetSDK.conference.videoForwarding(value, request).then( () => {
+      return VoxeetSDK.conference.videoForwarding(value, request).then(() => {
         dispatch(ControlsActions.setMaxVideoForwarding(value));
       });
     };
@@ -875,20 +883,25 @@ export class Actions {
         voxeet: { controls, participants },
       } = getState();
       let { requestedVideos, maxVideoForwarding } = controls;
-      const requested = requestedVideos.indexOf(participantId)>-1;
+      const requested = requestedVideos.indexOf(participantId) > -1;
       // call api and update controls
-      let rv = !requested? [...requestedVideos, participantId]:requestedVideos.filter(id=>id!=participantId);
-      let request = rv.map(
-          (id) => VoxeetSDK.conference.participants.get(id)
-      );
+      let rv = !requested
+        ? [...requestedVideos, participantId]
+        : requestedVideos.filter((id) => id != participantId);
+      let request = rv.map((id) => VoxeetSDK.conference.participants.get(id));
       //console.log('CA forwardParticipantVideo', {requestedVideos, maxVideoForwarding, participantId, state: !requested, request});
-      return VoxeetSDK.conference.videoForwarding(maxVideoForwarding, request).then( () => {
-        dispatch(ControlsActions.setRequestedVideo(participantId, !requested));
-      }).catch(error => {
-        console.error(error);
-        // Just in case..
-        dispatch(ControlsActions.setRequestedVideo(participantId, false));
-      });
+      return VoxeetSDK.conference
+        .videoForwarding(maxVideoForwarding, request)
+        .then(() => {
+          dispatch(
+            ControlsActions.setRequestedVideo(participantId, !requested)
+          );
+        })
+        .catch((error) => {
+          console.error(error);
+          // Just in case..
+          dispatch(ControlsActions.setRequestedVideo(participantId, false));
+        });
     };
   }
 
@@ -959,9 +972,14 @@ export class Actions {
   static handleLeave() {
     return (dipatch, getState) => {
       const {
-        voxeet: { participants },
+        voxeet: { participants, controls },
       } = getState();
       if (participants.handleOnLeave != null) participants.handleOnLeave();
+      if (controls.closeSessionAtHangUp) {
+        this._removeListeners().then(() => {
+          VoxeetSDK.session.close();
+        });
+      }
     };
   }
 
@@ -1220,7 +1238,7 @@ export class Actions {
   }
 
   static _initializeListeners(dispatch, options) {
-    let {chatOptions} = options || {};
+    let { chatOptions } = options || {};
     return new Promise((resolve, reject) => {
       VoxeetSDK.conference.on("left", () => {
         dispatch(this.handleLeave());
@@ -1354,15 +1372,15 @@ export class Actions {
 
       VoxeetSDK.conference.on("autoplayBlocked", () => {
         dispatch(
-          OnBoardingMessageWithConfirmationActions.
-          onBoardingMessageWithConfirmation(
+          OnBoardingMessageWithConfirmationActions.onBoardingMessageWithConfirmation(
             strings.autoPlayBlocked,
             strings.autoPlayBlockedButton,
             false,
             () => {
               VoxeetSDK.conference.playBlockedAudio();
-            })
-          );
+            }
+          )
+        );
       });
 
       VoxeetSDK.conference.on("streamUpdated", (user, stream) => {
@@ -1588,8 +1606,10 @@ export class Actions {
           case CHAT_MESSAGE:
             dispatch(this._newBadgeMessage());
             // Run autolinker
-            if(chatOptions && chatOptions.autoLinker) {
-              dataParsed.content = dataParsed.content && Autolinker.link(dataParsed.content.trim());
+            if (chatOptions && chatOptions.autoLinker) {
+              dataParsed.content =
+                dataParsed.content &&
+                Autolinker.link(dataParsed.content.trim());
             }
             dispatch(ChatActions.addMessage(dataParsed));
             break;
