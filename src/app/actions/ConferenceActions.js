@@ -1491,6 +1491,11 @@ export class Actions {
             description = strings.descConferenceCapacityError;
             isError = true;
             break;
+          case "DataChannelError":
+            title = data.message;
+            description = null;
+            isError = true;
+            break;
           default:
             // title = strings[`titleDefaultError`];
             // description = strings[`descDefaultError`];
