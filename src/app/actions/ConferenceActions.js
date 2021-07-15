@@ -1179,9 +1179,13 @@ export class Actions {
             isError = true;
             break;
           case 'MediaServerConnectionError':
-            console.log('MediaServerConnectionError');
             title = data.message;
             description = null;
+            isError = true;
+            break;
+          case 'DolbyVoiceNotSupported':
+            title = strings.dolbyVoiceNotSupported;
+            description = data.message;
             isError = true;
             break;
           default:
